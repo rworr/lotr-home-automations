@@ -1,0 +1,70 @@
+Parchment I, 1-1
+Vial I, 1-2
+Hide I, 1-3
+Satchel I, 1-4
+Lamp I, 1-5
+Worn Ring I, 1-6
+Resin I, 1-7
+Ink I, 1-8
+Dust I, 1-9
+Sheet I, 2-1
+Thread I, 2-2
+Branch I, 2-3
+Indigo I, 2-4
+Sigil I, 2-5
+Pact I, 2-6
+Blessing I, 2-7
+Crest II, 2-8
+Token II, 2-9
+Rune II, 3-1
+Medallion II, 3-2
+Tabard II, 3-3
+Chalk II, 3-9
+Candle II, 4-1
+Tar II, 4-2
+Iron II, 4-3
+Cotton II, 4-4
+Branch II, 4-5
+Indigo II, 4-6
+Sigil II, 4-7
+Pact II, 4-8
+Blessing II, 4-9
+Opal II, 5-1
+Turquoise II, 5-2
+Topaz II, 5-3
+Onyx II, 5-4
+Jasper II, 5-5
+Focus Essence II, 3-4
+Damage Essence II, 3-5
+Resist Essence II, 3-6
+Armor Essence II, 3-7
+Health Essence II, 3-8
+Luminous Crystal II, Various
+Shadow Crystal II, Various
+Crest III, 5-6
+Token III, 5-7
+Rune III, 5-8
+Medallion III, 5-9
+Tabard III, 6-1
+Clay III, 6-2
+Journal III, 6-3
+Glyph III, 6-4
+Steel III, 6-5
+Linen III, 6-6
+Chalk III, 6-7
+Candle III, 6-8
+Tar III, 6-9
+Iron III, 6-7
+Cotton III, 6-8
+Opal III, Main Store
+Turquoise III, Main Store
+Yellow Blossoms II, Arena & Raid Store
+Chisel II, Arena & Raid Store
+Dark Shirt II, Arena & Raid Store
+Focus Essence III, Weekly & Raid Store
+Damage Essence III, Weekly & Raid Store
+Resist Essence III, Weekly & Raid Store
+Armor Essence III, Weekly & Raid Store
+Health Essence III, Weekly & Raid Store
+Luminous Crystal Fragments III, Various
+Shadow Crystal Fragments III, Various
