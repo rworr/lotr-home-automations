@@ -1,20 +1,9 @@
-package gear_fectch_test
+package lotr_gg_service_test
 
 import (
-	gearfetch "gear-fetch"
+	gearfetch "gear-fetch/lotr_gg_service"
 	"testing"
 )
-
-/*
-func TestCallWebsite(t *testing.T) {
-	status, err := gearfetch.CallWebsite(aeldred)
-	if err != nil {
-		t.Error(err)
-	}
-
-	t.Log(status)
-}
-*/
 
 func TestGetCharacters(t *testing.T) {
 	characterMap, err := gearfetch.GetCharacters()
