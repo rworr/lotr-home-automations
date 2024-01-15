@@ -14,7 +14,9 @@ const (
 	unitCardTag      = "unit-card__name"
 )
 
-func GetCharacters() (map[string]string, error) {
+type CharacterUrls map[string]string
+
+func GetCharacters() (CharacterUrls, error) {
 	body, err := callWebsite(characterPageUrl)
 	if err != nil {
 		return nil, err
@@ -25,12 +27,12 @@ func GetCharacters() (map[string]string, error) {
 		return nil, err
 	}
 
-	characterMap := make(map[string]string)
+	characterMap := make(CharacterUrls)
 	crawlForCharacters(doc, characterMap)
 	return characterMap, nil
 }
 
-func crawlForCharacters(node *html.Node, characterUrls map[string]string) {
+func crawlForCharacters(node *html.Node, characterUrls CharacterUrls) {
 	var enteringGridCell bool
 	for _, attr := range node.Attr {
 		if attr.Key == "class" && attr.Val == gridCellTag {
@@ -47,7 +49,7 @@ func crawlForCharacters(node *html.Node, characterUrls map[string]string) {
 	}
 }
 
-func crawlForCharacterData(node *html.Node, characterUrls map[string]string) {
+func crawlForCharacterData(node *html.Node, characterUrls CharacterUrls) {
 	if node.Data != "a" {
 		return
 	}
@@ -61,7 +63,7 @@ func crawlForCharacterData(node *html.Node, characterUrls map[string]string) {
 
 	var characterName string
 	for child := node.FirstChild; child != nil && characterName == ""; child = child.NextSibling {
-		characterName = crawlForCharacterCard(child, characterUrls)
+		characterName = crawlForCharacterCard(child)
 	}
 
 	if characterName == "" || characterUrl == "" {
@@ -71,7 +73,7 @@ func crawlForCharacterData(node *html.Node, characterUrls map[string]string) {
 	characterUrls[characterName] = characterUrl
 }
 
-func crawlForCharacterCard(node *html.Node, characterUrls map[string]string) string {
+func crawlForCharacterCard(node *html.Node) string {
 	var enteringUnitCard bool
 	for _, attr := range node.Attr {
 		if attr.Key == "class" && attr.Val == unitCardTag {
@@ -84,7 +86,7 @@ func crawlForCharacterCard(node *html.Node, characterUrls map[string]string) str
 		if enteringUnitCard && child.Type == html.TextNode {
 			characterName = child.Data
 		} else {
-			characterName = crawlForCharacterCard(child, characterUrls)
+			characterName = crawlForCharacterCard(child)
 		}
 	}
 
