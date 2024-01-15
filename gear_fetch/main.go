@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gear-fetch/lotr_gg_service"
 )
 
@@ -11,11 +10,7 @@ func main() {
 		return
 	}
 
-	for char, url := range characters {
-		fmt.Printf("%v - %v\n", char, url)
-	}
-
-	gearLevels, err := lotr_gg_service.GetCharacterGear("Aeldred", characters)
+	gearLevels, err := lotr_gg_service.GetCharacterGear("Golburz", characters)
 	if err != nil {
 		return
 	}

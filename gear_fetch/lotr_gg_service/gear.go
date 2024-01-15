@@ -12,7 +12,6 @@ import (
 
 const (
 	baseUrlTemplate   = "https://lotr.gg%vgear/"
-	maximumLevels     = 9
 	gearBucketClass   = "bucket-item__main "
 	gearNameClass     = "gear-item"
 	gearDataAttr      = "data-bs-toggle"
@@ -39,7 +38,7 @@ func GetCharacterGear(character string, characterUrls CharacterUrls) (GearLevels
 		return nil, err
 	}
 
-	gearLevels := make(GearLevels, maximumLevels)
+	gearLevels := make(GearLevels, 0)
 	crawlForGearTier(doc, &gearLevels)
 	return gearLevels, nil
 }
@@ -48,7 +47,11 @@ func crawlForGearTier(node *html.Node, gearLevels *GearLevels) {
 	var gearLevel *GearLevel
 	if node.Type == html.ElementNode && node.Data == "h2" &&
 		node.FirstChild.Type == html.TextNode && strings.Contains(node.FirstChild.Data, "Gear Level") {
-		gearLevel = &GearLevel{Level: node.FirstChild.Data, Gear: make(GearMap)}
+		println(node.FirstChild.Data)
+		gearLevel = &GearLevel{
+			Level: strings.TrimSpace(node.FirstChild.Data),
+			Gear:  make(GearMap),
+		}
 	}
 
 	if gearLevel != nil {
