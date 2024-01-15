@@ -47,7 +47,6 @@ func crawlForGearTier(node *html.Node, gearLevels *GearLevels) {
 	var gearLevel *GearLevel
 	if node.Type == html.ElementNode && node.Data == "h2" &&
 		node.FirstChild.Type == html.TextNode && strings.Contains(node.FirstChild.Data, "Gear Level") {
-		println(node.FirstChild.Data)
 		gearLevel = &GearLevel{
 			Level: strings.TrimSpace(node.FirstChild.Data),
 			Gear:  make(GearMap),
