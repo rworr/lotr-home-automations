@@ -1,23 +1,9 @@
 package gearlist
 
 import (
-	"bufio"
-	"embed"
-	"log"
-	"strings"
-
+	"gear-fetch/inputs"
 	"gear-fetch/lotr_gg_service"
 )
-
-//go:embed data/farming_locations.csv
-var gearFile embed.FS
-var gearInfoList []GearInfo
-var gearInfoByName map[string]GearInfo
-
-type GearInfo struct {
-	Name     string
-	Location string
-}
 
 type CharacterGearLevel struct {
 	Character string
@@ -25,36 +11,11 @@ type CharacterGearLevel struct {
 }
 
 type characterGearEntry map[CharacterGearLevel]int
-type GearList map[GearInfo]characterGearEntry
-
-func init() {
-	file, err := gearFile.Open("data/farming_locations.csv")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	gearInfoList = make([]GearInfo, 0)
-	gearInfoByName = make(map[string]GearInfo)
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		components := strings.Split(scanner.Text(), ",")
-		newGearInfo := GearInfo{
-			Name:     components[0],
-			Location: components[1],
-		}
-		gearInfoList = append(gearInfoList, newGearInfo)
-		gearInfoByName[newGearInfo.Name] = newGearInfo
-	}
-}
-
-func SortedGearInfo() []GearInfo {
-	// maintain order from file
-	return gearInfoList
-}
+type GearList map[inputs.GearInfo]characterGearEntry
 
 func NewGearList(characterGear map[string]lotr_gg_service.GearLevels) GearList {
+	gearInfoList := inputs.SortedGearInfo()
+	gearInfoByName := inputs.GearInfoByName()
 	gearList := make(GearList, len(gearInfoList))
 	for _, gear := range gearInfoList {
 		gearList[gear] = make(characterGearEntry)
@@ -72,7 +33,7 @@ func NewGearList(characterGear map[string]lotr_gg_service.GearLevels) GearList {
 				if gearList[gear] != nil {
 					gearList[gear][characterLevel] = quantity
 				} else {
-					unknownGearInfo := GearInfo{
+					unknownGearInfo := inputs.GearInfo{
 						Name:     gearName,
 						Location: "unknown",
 					}

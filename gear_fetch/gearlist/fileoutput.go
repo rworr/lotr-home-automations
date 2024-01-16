@@ -44,5 +44,5 @@ func getOutputFileName() (string, error) {
 	if !ok {
 		return "", FileNameError{pc, filename, line}
 	}
-	return filepath.Join(filepath.Dir(filename), "gearlist.csv"), nil
+	return filepath.Join(filepath.Dir(filename), "../outputs/gearlist.csv"), nil
 }

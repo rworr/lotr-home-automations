@@ -2,6 +2,7 @@ package gearlist
 
 import (
 	"bufio"
+	"gear-fetch/inputs"
 	"sort"
 	"strconv"
 	"strings"
@@ -11,7 +12,7 @@ const sep = ","
 
 func OutputGearList(writer *bufio.Writer, gearList GearList) {
 	sortedCharacterLevels := getSortedCharacterLevels(gearList)
-	sortedGear := SortedGearInfo()
+	sortedGear := inputs.SortedGearInfo()
 
 	writer.WriteString(getOutputHeaders(sortedCharacterLevels))
 
@@ -69,7 +70,7 @@ func getOutputHeaders(characterGearLevels []CharacterGearLevel) string {
 	return builder.String()
 }
 
-func getOutputString(info GearInfo, entry characterGearEntry, sortedCharacters []CharacterGearLevel) string {
+func getOutputString(info inputs.GearInfo, entry characterGearEntry, sortedCharacters []CharacterGearLevel) string {
 	builder := strings.Builder{}
 	builder.WriteString(info.Name)
 	builder.WriteString(sep)
