@@ -49,6 +49,11 @@ func init() {
 	}
 }
 
+func SortedGearInfo() []GearInfo {
+	// maintain order from file
+	return gearInfoList
+}
+
 func NewGearList(characterGear map[string]lotr_gg_service.GearLevels) GearList {
 	gearList := make(GearList, len(gearInfoList))
 	for _, gear := range gearInfoList {
