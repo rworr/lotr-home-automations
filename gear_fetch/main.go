@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"gear-fetch/gearlist"
 	"gear-fetch/lotr_gg_service"
 )
 
@@ -22,4 +24,10 @@ func main() {
 		}
 		println()
 	}
+
+	characterGear := make(map[string]lotr_gg_service.GearLevels)
+	characterGear["Golburz"] = gearLevels
+
+	list := gearlist.NewGearList(characterGear)
+	fmt.Printf("%#v\n", list)
 }
