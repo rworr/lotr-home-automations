@@ -41,7 +41,7 @@ func getSortedCharacterLevels(gearList GearList) []CharacterGearLevel {
 		if characterGearLevels[i].Character == characterGearLevels[j].Character {
 			return characterGearLevels[i].Level < characterGearLevels[j].Level
 		}
-		return characterGearLevels[i].Character > characterGearLevels[j].Character
+		return characterGearLevels[i].Character < characterGearLevels[j].Character
 	})
 
 	return characterGearLevels

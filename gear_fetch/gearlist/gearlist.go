@@ -13,7 +13,7 @@ type CharacterGearLevel struct {
 type characterGearEntry map[CharacterGearLevel]int
 type GearList map[inputs.GearInfo]characterGearEntry
 
-func NewGearList(characterGear map[string]lotr_gg_service.GearLevels) GearList {
+func ParseGearLevels(characterGear map[string]lotr_gg_service.GearLevels) GearList {
 	gearInfoList := inputs.SortedGearInfo()
 	gearInfoByName := inputs.GearInfoByName()
 	gearList := make(GearList, len(gearInfoList))

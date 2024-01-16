@@ -4,6 +4,11 @@ package lotr_gg_service
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"runtime"
+	"sort"
+	"strings"
 
 	"golang.org/x/net/html"
 )
@@ -15,6 +20,21 @@ const (
 )
 
 type CharacterUrls map[string]string
+
+type FileNameError struct {
+	pc   uintptr
+	file string
+	line int
+}
+
+func (err FileNameError) Error() string {
+	return fmt.Sprintf(
+		"Unable to determine root file path, got pc: %v, file: %v, line: %v",
+		err.pc,
+		err.file,
+		err.line,
+	)
+}
 
 func GetCharacters() (CharacterUrls, error) {
 	body, err := callWebsite(characterPageUrl)
@@ -30,6 +50,24 @@ func GetCharacters() (CharacterUrls, error) {
 	characterMap := make(CharacterUrls)
 	crawlForCharacters(doc, characterMap)
 	return characterMap, nil
+}
+
+func DumpCharacters(characterMap CharacterUrls) {
+	outputFileName, err := getOutputFileName()
+	outfile, err := os.Create(outputFileName)
+	if err != nil {
+		panic(err)
+	}
+	defer outfile.Close()
+
+	characters := make([]string, 0, len(characterMap))
+	for character := range characterMap {
+		characters = append(characters, character)
+	}
+
+	sort.Strings(characters)
+
+	outfile.WriteString(strings.Join(characters, "\n"))
 }
 
 func crawlForCharacters(node *html.Node, characterUrls CharacterUrls) {
@@ -91,4 +129,12 @@ func crawlForCharacterCard(node *html.Node) string {
 	}
 
 	return characterName
+}
+
+func getOutputFileName() (string, error) {
+	pc, filename, line, ok := runtime.Caller(0)
+	if !ok {
+		return "", FileNameError{pc, filename, line}
+	}
+	return filepath.Join(filepath.Dir(filename), "../outputs/characters.csv"), nil
 }
