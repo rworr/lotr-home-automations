@@ -57,7 +57,6 @@ func loadCharacters() {
 	defer file.Close()
 
 	characters = make([]string, 0)
-	gearInfoByName = make(map[string]GearInfo)
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
