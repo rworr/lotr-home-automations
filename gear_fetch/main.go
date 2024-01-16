@@ -25,5 +25,19 @@ func main() {
 	}
 
 	gear := gearlist.ParseGearLevels(characterGear)
+	unknownGear := make([]string, 0)
+	for gearinfo := range gear {
+		if gearinfo.Location == "unknown" {
+			unknownGear = append(unknownGear, gearinfo.Name)
+		}
+	}
+
+	if len(unknownGear) > 0 {
+		fmt.Println("Unknown gear found:")
+		for _, item := range unknownGear {
+			fmt.Println(item)
+		}
+	}
+
 	gearlist.OutputToFile(gear)
 }
