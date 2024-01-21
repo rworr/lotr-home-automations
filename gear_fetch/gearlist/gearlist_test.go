@@ -42,3 +42,18 @@ func TestOutputGearList(t *testing.T) {
 		}
 	}
 }
+
+func TestGetHomeSpreadsheet(t *testing.T) {
+	sheet := gearlist.GetHomeSpreadsheet()
+	readRange := "Farming Plan!A2:E2"
+
+	service := gearlist.GetGoogleService()
+	resp, err := service.Sheets.Spreadsheets.Values.Get(sheet.Id, readRange).Do()
+	if err != nil {
+		t.Errorf("Unable to retrieve data from sheet: %v", err)
+	}
+
+	if resp.Values[0][0] != "Farming" {
+		t.Errorf("Expected 'Farming' as return value, got :%#v", resp.Values)
+	}
+}
