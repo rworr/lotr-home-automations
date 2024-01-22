@@ -10,15 +10,15 @@ import (
 
 const sep = ","
 
-func OutputGearList(writer *bufio.Writer, gearList GearList) {
+func OutputGearListToCSV(writer *bufio.Writer, gearList GearList) {
 	sortedCharacterLevels := getSortedCharacterLevels(gearList)
 	sortedGear := inputs.SortedGearInfo()
 
-	writer.WriteString(getOutputHeaders(sortedCharacterLevels))
+	writer.WriteString(getCSVOutputHeaders(sortedCharacterLevels))
 
 	for _, gearInfo := range sortedGear {
 		characterGear := gearList[gearInfo]
-		writer.WriteString(getOutputString(gearInfo, characterGear, sortedCharacterLevels))
+		writer.WriteString(getCSVOutputString(gearInfo, characterGear, sortedCharacterLevels))
 	}
 }
 
@@ -47,7 +47,7 @@ func getSortedCharacterLevels(gearList GearList) []CharacterGearLevel {
 	return characterGearLevels
 }
 
-func getOutputHeaders(characterGearLevels []CharacterGearLevel) string {
+func getCSVOutputHeaders(characterGearLevels []CharacterGearLevel) string {
 	builder := strings.Builder{}
 	builder.WriteString(sep)
 	builder.WriteString(sep)
@@ -70,7 +70,7 @@ func getOutputHeaders(characterGearLevels []CharacterGearLevel) string {
 	return builder.String()
 }
 
-func getOutputString(info inputs.GearInfo, entry characterGearEntry, sortedCharacters []CharacterGearLevel) string {
+func getCSVOutputString(info inputs.GearInfo, entry characterGearEntry, sortedCharacters []CharacterGearLevel) string {
 	builder := strings.Builder{}
 	builder.WriteString(info.Name)
 	builder.WriteString(sep)

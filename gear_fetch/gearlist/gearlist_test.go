@@ -26,7 +26,7 @@ func TestOutputGearList(t *testing.T) {
 
 	builder := strings.Builder{}
 	bufioWriter := bufio.NewWriter(&builder)
-	gearlist.OutputGearList(bufioWriter, golburzGear)
+	gearlist.OutputGearListToCSV(bufioWriter, golburzGear)
 	bufioWriter.Flush()
 
 	gearOutput := builder.String()
@@ -47,8 +47,7 @@ func TestGetHomeSpreadsheet(t *testing.T) {
 	sheet := gearlist.GetHomeSpreadsheet()
 	readRange := "Farming Plan!A2:E2"
 
-	service := gearlist.GetGoogleService()
-	resp, err := service.Sheets.Spreadsheets.Values.Get(sheet.Id, readRange).Do()
+	resp, err := sheet.Sheets.Spreadsheets.Values.Get(sheet.Sheet.SpreadsheetId, readRange).Do()
 	if err != nil {
 		t.Errorf("Unable to retrieve data from sheet: %v", err)
 	}

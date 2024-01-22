@@ -16,6 +16,11 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+type HomeSpreadsheet struct {
+	*Service
+	Sheet *sheets.Spreadsheet
+}
+
 type Service struct {
 	Sheets *sheets.Service
 	Drive  *drive.Service
@@ -81,7 +86,7 @@ func saveToken(path string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
-func GetGoogleService() *Service {
+func getGoogleService() *Service {
 	if singletonService != nil {
 		return singletonService
 	}
@@ -116,8 +121,8 @@ func GetGoogleService() *Service {
 	return singletonService
 }
 
-func GetHomeSpreadsheet() *drive.File {
-	service := GetGoogleService()
+func GetHomeSpreadsheet() *HomeSpreadsheet {
+	service := getGoogleService()
 	resp, err := service.Drive.Files.List().Q("name = 'HoME'").Fields("files(id, name)").Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve files: %v", err)
@@ -130,8 +135,16 @@ func GetHomeSpreadsheet() *drive.File {
 		}
 	}
 	if homeSheet == nil {
-		log.Fatalf("Unable to get HoME spreadsheet")
+		log.Fatalf("Unable to get HoME spreadsheet, not returned in drive results")
 	}
 
-	return homeSheet
+	sheet, err := service.Sheets.Spreadsheets.Get(homeSheet.Id).Do()
+	if sheet == nil {
+		log.Fatalf("Unable to get HoME spreadsheet: %v", err)
+	}
+
+	return &HomeSpreadsheet{
+		Service: service,
+		Sheet:   sheet,
+	}
 }

@@ -36,7 +36,7 @@ func OutputToFile(gearList GearList) {
 	writer := bufio.NewWriter(outfile)
 	defer writer.Flush()
 
-	OutputGearList(writer, gearList)
+	OutputGearListToCSV(writer, gearList)
 }
 
 func getOutputFileName() (string, error) {

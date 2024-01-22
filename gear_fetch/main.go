@@ -39,5 +39,6 @@ func main() {
 		}
 	}
 
-	gearlist.OutputToFile(gear)
+	homeSheet := gearlist.GetHomeSpreadsheet()
+	gearlist.OutputGearListToSheets(gear, homeSheet)
 }
